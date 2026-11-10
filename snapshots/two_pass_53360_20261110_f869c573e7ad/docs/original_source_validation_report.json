@@ -1,0 +1,18 @@
+{
+  "validated_at_utc": "2026-11-07T13:43:36.965311+00:00",
+  "status": "passed",
+  "molecules": 100000,
+  "unique_ids": 100000,
+  "unique_isomeric_structures": 100000,
+  "molecules_with_evidence": 100000,
+  "qualifying_activity_records": 257547,
+  "vector_shape": [
+    100000,
+    24
+  ],
+  "all_vector_cells_finite_and_aligned": true,
+  "independent_descriptor_recomputations": 256,
+  "max_nonempty_scaffold_group": 50,
+  "file_checksums_verified": true,
+  "limits": "No independent experimental replication or manual chemical annotation review is implied."
+}

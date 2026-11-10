@@ -1,0 +1,11 @@
+Audit classification revision for the 2026-11-10 partial snapshot
+
+The original full-source audit verified 100,000 source rows, 55,550 accepted first-pass descriptions, and 53,360 accepted second-pass descriptions. Its 52 reported errors all concerned historical attempts logged as invalid_http_json with HTTP status 200. Those attempts contained no usable response, response identifier, returned model, final content or token usage. No saved record selected any of those attempts as its description source.
+
+The request client already recorded these attempts as failures and retried them. The audit originally allowed missing successful-response bodies only for transport failures, omitting this explicit response parsing/shape failure. The corrected verifier recognizes this narrow category separately from transport errors. It still requires a complete retained successful API response for every accepted description.
+
+The reconciliation helper binds the original failed audit by SHA256, checks every one of the 52 events and its lack of selected records, checks the unchanged journal inventory, and rehashes every input and export bound by the original audit. Any unrelated original audit error or changed evidence blocks reconciliation. The corrected report contains the original errors, their classification evidence, and both verifier hashes under correction_evidence.
+
+The initial report is retained in docs/audit_initial_invalid_http_json.json. The current report used for packaging is metadata/integrity_audit.json. The original verifier is retained in code/audit_history/verify_two_pass_full_before_invalid_json_fix.py. The revised verifier and reconciliation helper are in code/scripts/. This revision does not alter generation prompts, request parameters, molecular records, annotations, the run fingerprint, or the final 100,000-pair publication requirement.
+
+The unusable response bodies were not retained by the original request client. Their contents and any provider billing remain unknown; empty usage does not establish zero cost. Data-provenance checks and this classification correction are not independent chemical verification.

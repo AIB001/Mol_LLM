@@ -1,0 +1,171 @@
+{
+  "schema_version": "rdkit_properties_v1",
+  "rdkit_version": "2025.03.2",
+  "vector_length": 24,
+  "features": [
+    {
+      "index": 0,
+      "name": "mol_wt",
+      "unit": "g/mol",
+      "implementation": "Descriptors.MolWt"
+    },
+    {
+      "index": 1,
+      "name": "exact_mol_wt",
+      "unit": "Da",
+      "implementation": "Descriptors.ExactMolWt"
+    },
+    {
+      "index": 2,
+      "name": "crippen_logp",
+      "unit": "dimensionless",
+      "implementation": "Crippen.MolLogP"
+    },
+    {
+      "index": 3,
+      "name": "tpsa",
+      "unit": "angstrom^2",
+      "implementation": "CalcTPSA(includeSandP=False)"
+    },
+    {
+      "index": 4,
+      "name": "hbd",
+      "unit": "count",
+      "implementation": "CalcNumHBD"
+    },
+    {
+      "index": 5,
+      "name": "hba",
+      "unit": "count",
+      "implementation": "CalcNumHBA"
+    },
+    {
+      "index": 6,
+      "name": "rotatable_bonds",
+      "unit": "count",
+      "implementation": "CalcNumRotatableBonds(Strict)"
+    },
+    {
+      "index": 7,
+      "name": "ring_count",
+      "unit": "count",
+      "implementation": "CalcNumRings"
+    },
+    {
+      "index": 8,
+      "name": "aromatic_rings",
+      "unit": "count",
+      "implementation": "CalcNumAromaticRings"
+    },
+    {
+      "index": 9,
+      "name": "aliphatic_rings",
+      "unit": "count",
+      "implementation": "CalcNumAliphaticRings"
+    },
+    {
+      "index": 10,
+      "name": "saturated_rings",
+      "unit": "count",
+      "implementation": "CalcNumSaturatedRings"
+    },
+    {
+      "index": 11,
+      "name": "heterocycles",
+      "unit": "count",
+      "implementation": "CalcNumHeterocycles"
+    },
+    {
+      "index": 12,
+      "name": "aromatic_heterocycles",
+      "unit": "count",
+      "implementation": "CalcNumAromaticHeterocycles"
+    },
+    {
+      "index": 13,
+      "name": "fraction_csp3",
+      "unit": "fraction",
+      "implementation": "CalcFractionCSP3"
+    },
+    {
+      "index": 14,
+      "name": "heavy_atom_count",
+      "unit": "count",
+      "implementation": "Mol.GetNumHeavyAtoms"
+    },
+    {
+      "index": 15,
+      "name": "heteroatom_count",
+      "unit": "count",
+      "implementation": "CalcNumHeteroatoms"
+    },
+    {
+      "index": 16,
+      "name": "formal_charge",
+      "unit": "elementary_charge",
+      "implementation": "Chem.GetFormalCharge"
+    },
+    {
+      "index": 17,
+      "name": "positive_charge_centers",
+      "unit": "count",
+      "implementation": "atoms with formal charge > 0"
+    },
+    {
+      "index": 18,
+      "name": "negative_charge_centers",
+      "unit": "count",
+      "implementation": "atoms with formal charge < 0"
+    },
+    {
+      "index": 19,
+      "name": "molar_refractivity",
+      "unit": "cm^3/mol",
+      "implementation": "Crippen.MolMR"
+    },
+    {
+      "index": 20,
+      "name": "amide_bonds",
+      "unit": "count",
+      "implementation": "CalcNumAmideBonds"
+    },
+    {
+      "index": 21,
+      "name": "spiro_atoms",
+      "unit": "count",
+      "implementation": "CalcNumSpiroAtoms"
+    },
+    {
+      "index": 22,
+      "name": "bridgehead_atoms",
+      "unit": "count",
+      "implementation": "CalcNumBridgeheadAtoms"
+    },
+    {
+      "index": 23,
+      "name": "chiral_centers",
+      "unit": "count",
+      "implementation": "FindMolChiralCenters(includeUnassigned=True)"
+    }
+  ],
+  "representation": "Unscaled descriptors computed from the exact source SMILES; no neutralization, tautomerization or conformer generation.",
+  "tpsa_definition": "RDKit default N/O TPSA; includeSandP=False.",
+  "qualitative_bins": {
+    "crippen_logp_boundaries": [
+      0,
+      2,
+      4,
+      6
+    ],
+    "tpsa_boundaries": [
+      40,
+      90,
+      140
+    ],
+    "rotatable_bonds_upper_bounds": [
+      3,
+      8
+    ],
+    "status": "Project heuristics, not clinical or universal thresholds"
+  }
+}

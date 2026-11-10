@@ -1,0 +1,16 @@
+{
+  "schema_version": "two_pass_snapshot_authorization/1",
+  "authorized_on": "2026-11-10",
+  "user_instruction": "现在的结果推送",
+  "repository": "https://github.com/AIB001/Mol_LLM",
+  "scope": "Publish the current accepted two-pass results and separately identified accepted first-pass-only records as an explicitly incomplete checkpoint, together with prompts, code, source attribution and integrity evidence.",
+  "target_count": 100000,
+  "expected_complete_pairs": 53360,
+  "expected_first_pass_only": 2190,
+  "original_run_fingerprint": "f869c573e7ad7813de4c1b66020994870351f1b883039fbf04504f2faa602f67",
+  "relationship_to_full_run_authorization": "This newer user instruction authorizes publication before the full 100000-pair target is reached. The original complete-release gate and automatic eventual publication remain unchanged; this checkpoint uses a separate schema and destination.",
+  "preserve_existing_remote_content": true,
+  "force_push_allowed": false,
+  "exclude_credentials_and_raw_reasoning": true,
+  "chemistry_verified": false
+}

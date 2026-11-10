@@ -1,0 +1,25 @@
+ChEMBL two-pass molecular annotation dataset: source and scope
+
+Population
+The fixed population contains 100,000 unique ChEMBL molecules from the locally retained ChEMBL_37 PostgreSQL release. The source-selection manifest records release date 2026-05-01, archive SHA256 d5fb08a6c9bf6cf7319dbdf74bdb5a7d4ce767aace670250ba1435cab4d58c58, and selection seed 20261107. The original manifest is preserved with the release documentation.
+
+The recorded activity criteria require IC50, Ki, Kd or EC50; an equality relation; nM units; standard_flag=1; a non-null pChEMBL value; potential_duplicate=0; and a null data_validity_comment. Structure filters select single-component small molecules with carbon, no radicals, molecular weight from 100 to 1000, 8 to 80 heavy atoms, and a restricted element set. A seeded hash ordering and a nonempty Murcko scaffold cap of 50 were used. The source manifest reports 257,547 qualifying activity records linked to the selected population. These are source-selection criteria, not biological claims generated from the descriptions.
+
+Properties and structural evidence
+The 24-dimensional property vectors were calculated with RDKit 2025.03.2. Their order is retained in property_schema.json. Numeric descriptors are stored separately from the English prose. Original SMILES, ChEMBL IDs, source indices, graph-fact hashes and response references are preserved. Structural contexts summarize the same source graphs; graph round-trip checks do not independently establish the correctness of the natural-language descriptions.
+
+Annotation procedure
+Both stages use deepseek-v4-pro with thinking enabled, reasoning_effort low, and max_tokens 32768. A request contains at most five molecules. Stage one uses the local-region natural-description prompt. After a batch has accepted first-stage descriptions, stage two receives the same SMILES, structural context, computed properties and exact accepted first-stage text. The supplied conservative review prompt is preserved verbatim. Second-stage word count and style do not trigger rewriting. Transport or format failures remain separate from chemical quality judgments.
+
+The completed 500-pair experiment is reused with its original batch files, fingerprints and record positions. The remaining 99,500 molecules are grouped in source order after excluding those seed indices. Original seed and new batch IDs occupy separate provenance namespaces. The final corpus is sorted by original source_index, covering 1 through 100000 exactly once. Earlier single-pass and controlled-description datasets are not mixed into this corpus.
+
+Interpretation and quality evidence
+The primary released field description is the exact second-stage output; first_description preserves the exact accepted first-stage text. text_changed is exact string inequality, not evidence of a correction. All rows retain chemistry_verified=false. The prior fixed random50 paired review is included as limited quality evidence: it found supported corrections, retained errors and edits whose necessity was unclear. It is not an estimate of chemical accuracy for all 100,000 molecules, and the reviewed seed text has not been silently replaced by manually edited prose.
+
+Release contents and use
+The Git repository receives compressed paired JSONL shards, code and prompt snapshots, the property schema, source metadata, the final integrity audit, and the original ChEMBL license/required attribution. Raw request and reasoning logs, local database caches and API credentials remain outside the release. A final integrity audit establishes source, request, response and export alignment for all 100,000 pairs; it does not certify every chemical assertion.
+
+To export a CSV view without API calls, run the release's code/scripts/export_two_pass_views.py with --release-dir pointing to the release directory, --view paired (or first or second), and --output pointing to the desired CSV file. Published code is an execution-method snapshot. Regenerating annotations additionally requires the original aligned source tables and graph facts, credentials supplied outside the repository, and a regenerated or retained audited500 seed; stochastic model outputs are not guaranteed to reproduce identical text.
+
+Attribution
+Retain the supplied licenses/LICENSE and licenses/REQUIRED.ATTRIBUTION when reusing the ChEMBL-derived data. Model-generated English descriptions and separate computed descriptors are added by this project. No additional code license is asserted by this release.

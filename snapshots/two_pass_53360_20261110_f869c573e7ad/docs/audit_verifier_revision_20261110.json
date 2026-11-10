@@ -1,0 +1,10 @@
+{
+  "schema_version": "audit_verifier_revision/1",
+  "updated_at_utc": "2026-11-10T15:27:54.637673+00:00",
+  "run_fingerprint": "f869c573e7ad7813de4c1b66020994870351f1b883039fbf04504f2faa602f67",
+  "reason": "Recognize explicitly logged invalid_http_json HTTP200 attempts without response/usage as failed unusable responses, preserving unknown billing and requiring valid retained selected responses.",
+  "prior_verifier_sha256": "66d3ac32b8674a62aa11084c7e062c021a8fd1c304e92337489b2847ca1bd8e1",
+  "corrected_verifier_sha256": "f84e5c3a4674d17c232ffa118747a4ba6e4665420a637367d87b83273c0ad693",
+  "generation_prompts_code_records_and_fingerprint_unchanged": true,
+  "full_release_still_requires_100000_pairs": true
+}

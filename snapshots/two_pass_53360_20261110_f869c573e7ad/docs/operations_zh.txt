@@ -1,0 +1,32 @@
+ChEMBL 100,000 分子双轮标注运行说明
+
+本轮固定目录：results/chembl_100000_two_pass
+目标：100,000 个不同分子各有一条第一轮自然语言描述和一条第二轮检查结果。
+沿用 minimal_review_500 实验的模型、两份 prompt 和最小修改规则；已完成的 500 对结果保留原文与原始凭据，其余 99,500 个分子继续生成。
+
+第一轮使用 SMILES 和 structural_context 生成自然语言描述。第二轮将同一分子的 SMILES、结构上下文、24 维性质与第一轮原文一起发送给 DeepSeek，以用户提供的 conservative review prompt 检查，并尽量保留正确原文。模型第二轮检查不等同于独立化学验证，所有记录仍标记 chemistry_verified=false。
+
+目录与进度
+progress.json：运行期间两轮已接受条数、完成配对数、实际 token 用量及运行指纹。
+summary.json：准备、停止或全部完成时的汇总；运行中请优先看更新的 progress.json。
+supervisor/state.json：运行、等待充值、停止、最终审计/打包/推送的当前状态。
+first_pass/ 与 second_pass/：本轮新增分子的逐批凭据及原始输出。
+lineage/seed500/：原 500 对实验凭据的归档，保持原批次编号和指纹。
+first_pass/round_*.json、second_pass/round_*.json 和 paired/round_*.json：分轮导出；每完成一个新增 1,000 分子的轮次保存对应结果，并提供 CSV、JSONL 版本。
+paired/annotations.*、first_pass/annotations.*、second_pass/annotations.*：停止或全部完成后更新的累计导出；JSON 为缩进排版，JSONL 为逐行机器读取格式。
+workflow_snapshot/：启动时冻结的请求代码、检查代码、两份 prompt、来源和性质说明。
+release_assets.json：发布白名单及文件哈希。
+release/：全部完成且审计通过后生成的仓库发布包。
+publish_state.json：最终 Git 提交、推送结果和远程链接。
+
+运行控制
+每个 API 请求最多 5 个分子；第一轮成功后才提交第二轮。每账户最多 400 个同时进行的 HTTP 请求；未充值或不可用的账户自动停用。两个账户都不可用时，监督器按 60 秒间隔查询余额，充值后续跑。已接受阶段不重复付费生成。HTTP 和格式错误使用有界重试，无法恢复的错误会保留状态并停止等待检查。
+
+如需暂停，在本目录创建一个名为 STOP 的空文件。新请求会停止，已在途请求允许保存。监督器不会自动删除 STOP。恢复前应检查 summary 和 supervisor 状态，再按明确的恢复指令处理 STOP。
+
+发布条件
+仅当 100,000 个分子两轮全部完成、没有缺失配对，且独立完整性审计通过后，自动生成压缩 JSONL 数据分片、代码和 prompt 快照、来源和性质说明、许可证及审计报告，并 push 到 https://github.com/AIB001/Mol_LLM 的 main 分支。已授权普通 push；不使用 force push。原始推理日志、API 凭据和本地缓存不纳入仓库。
+
+发布数据中 first_description 是第一轮原文，description 是第二轮原文；text_changed 只表示两段文本是否完全相同，不能当作化学纠错正确率。此前 500 对中的随机 50 对抽查报告会随包保留。最终审计检验数据来源、请求、响应、导出和指纹的一致性，不把模型输出标为化学真值。
+
+本目录名在流程没有本质改变时保持稳定；运行进度以实际状态文件为准。旧单轮/受控模板标注任务不会由本监督器启动。
